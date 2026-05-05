@@ -29,7 +29,7 @@ app.use(cors({
 app.use(cookieParser("secretcode"));
 
 const sessionOptions = {
-  secret: "mysupersecretstring",
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
