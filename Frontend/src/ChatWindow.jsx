@@ -73,7 +73,7 @@ function ChatWindow() {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/api/chat", options);
+      const response = await fetch("https://sigmagpt-592n.onrender.com/chat", options);
       const res = await response.json();
       setReply(res.reply);
     } catch (err) {
