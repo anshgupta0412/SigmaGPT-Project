@@ -1,8 +1,9 @@
 import express from "express";
 import Thread from "../models/Thread.js";
 import getOpenAIAPIResponse from "../utils/openai.js"
+import user from "../models/user.js";
 
-const router = express.Router()
+const router = express.Router();
 
 //test
 router.post("/test", async(req, res) => {
@@ -50,6 +51,10 @@ router.get("/thread/:threadId", async (req, res) => {
 
 // Deleting
 router.delete("/thread/:threadId", async(req, res) => {
+    if(!req.isAuthenticated()){
+        return res.status(401).json({error: "You must be logged in to delete chats"});
+    }
+
     const {threadId} = req.params;
 
     try{

@@ -18,7 +18,7 @@ function Sidebar() {
 
     const getAllThreads = async () => {
         try {
-            const response = await fetch("http://localhost:8080/api/thread");
+            const response = await fetch("http://localhost:8080/api/thread", { credentials: "include" });
             const res = await response.json();
 
             const filteredData = res.map((thread) => ({
@@ -47,11 +47,16 @@ function Sidebar() {
     const deleteThread = async (threadId) => {
         try {
             const response = await fetch(`http://localhost:8080/api/thread/${threadId}`, {
-                method: "DELETE"
+                method: "DELETE",
+                credentials: "include"
             });
 
             const res = await response.json();
-            console.log(res);
+
+            if (!response.ok) {
+                alert(res.error || "Failed to delete thread");
+                return;
+            }
 
             setAllThreads((prev) => prev.filter((thread) => thread.threadId !== threadId));
             if(threadId === currThreadId){
@@ -67,7 +72,7 @@ function Sidebar() {
         setNewChat(false);
 
         try {
-            const response = await fetch(`http://localhost:8080/api/thread/${newThreadID}`);
+            const response = await fetch(`http://localhost:8080/api/thread/${newThreadID}`, { credentials: "include" });
             const res = await response.json();
 
             console.log(res);

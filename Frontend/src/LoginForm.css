@@ -1,0 +1,96 @@
+/* hide page scroll when modal opens */
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+.authOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 9999;
+}
+
+.authModalBox {
+  width: 100%;
+  max-width: 430px;
+  background: #1f1f1f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  animation: fadeIn 0.25s ease;
+  box-sizing: border-box;
+}
+
+.authModalBox h2 {
+  color: #fff;
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 0 0 24px;
+  text-align: center;
+}
+
+.authForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.authForm input {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: #2a2a2a;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.authForm input::placeholder {
+  color: #9ca3af;
+}
+
+.authForm button {
+  width: 80%;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  padding: 16px;
+  border-radius: 14px;
+  background: #339cff;
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 8px;
+  margin-left: 35px;
+}
+
+.authForm button:hover {
+  background: #228df5;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
