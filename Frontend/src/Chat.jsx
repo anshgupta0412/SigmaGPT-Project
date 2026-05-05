@@ -7,21 +7,18 @@ import "highlight.js/styles/github-dark.css";
 
 function Chat() {
     const { newChat, prevChats, reply } = useContext(MyContext);
-    const [latestReply, setLatestReply] = useState(null);
+    const [typedText, setTypedText] = useState("");
 
     useEffect(() => {
-        if (reply === null) {
-            setLatestReply(null);
+        if (!reply || !prevChats?.length) {
             return;
         }
-
-        if (!prevChats?.length || !reply) return;
 
         const words = reply.split(" ");
         let idx = 0;
 
         const interval = setInterval(() => {
-            setLatestReply(words.slice(0, idx + 1).join(" "));
+            setTypedText(words.slice(0, idx + 1).join(" "));
             idx++;
 
             if (idx >= words.length) {
@@ -31,6 +28,8 @@ function Chat() {
 
         return () => clearInterval(interval);
     }, [reply, prevChats]);
+
+    const isTyping = reply && typedText !== reply;
 
     const lastChat = prevChats?.[prevChats.length - 1];
 
@@ -57,10 +56,10 @@ function Chat() {
 
                 {prevChats.length > 0 && lastChat && (
                     <>
-                        {latestReply !== null && lastChat.role === "assistant" ? (
+                        {isTyping && lastChat.role === "assistant" ? (
                             <div className="gptDiv" key="typing">
                                 <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
-                                    {latestReply}
+                                    {typedText}
                                 </ReactMarkdown>
                             </div>
                         ) : (

@@ -44,7 +44,7 @@ function SignupForm({ setShowSignup, setLoggedInUser }) {
       }
 
       setShowSignup(false);
-    } catch (err) {
+    } catch {
       alert("Something went wrong. Please try again.");
     }
   };

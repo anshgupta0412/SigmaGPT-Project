@@ -15,6 +15,7 @@ function ChatWindow() {
     currThreadId,
     setPrevChats,
     setNewChat,
+    setAllThreads,
   } = useContext(MyContext);
   
   const [showSignup, setShowSignup] = useState(false);
@@ -22,37 +23,6 @@ function ChatWindow() {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
-
-  // Check if user is already logged in on mount
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await fetch("http://localhost:8080/me", {
-          credentials: "include",
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setLoggedInUser(data.user);
-        }
-      } catch (err) {
-        // Not authenticated, ignore
-      }
-    };
-    checkAuth();
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      await fetch("http://localhost:8080/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-      setLoggedInUser(null);
-      setIsOpen(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const getReply = async () => {
     if (!prompt.trim()) return;
@@ -73,9 +43,13 @@ function ChatWindow() {
     };
 
     try {
-      const response = await fetch("https://sigmagpt-592n.onrender.com/chat", options);
+      const response = await fetch("http://localhost:8080/api/chat", options);
       const res = await response.json();
       setReply(res.reply);
+
+      const threadsRes = await fetch("http://localhost:8080/api/thread", { credentials: "include" });
+      const threads = await threadsRes.json();
+      setAllThreads(threads.map((t) => ({ threadId: t.threadId, title: t.title })));
     } catch (err) {
       console.log(err);
     } finally {
@@ -106,6 +80,19 @@ function ChatWindow() {
     setIsOpen(!isOpen);
   };
 
+  const handleLogout = async () => {
+    try {
+      await fetch("http://localhost:8080/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+      setLoggedInUser(null);
+      setIsOpen(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="chatWindow">
       <div className="navbar">
@@ -116,24 +103,25 @@ function ChatWindow() {
         <div className="navbarRight">
           {!loggedInUser ? (
             <div className="authLinks">
-              <span onClick={() => setShowLogin(true)}>
+              <span onClick={ () => {setShowLogin(true)}}>
                 <i className="fa-solid fa-arrow-right-to-bracket"></i> LogIn
               </span>
-              <span onClick={() => setShowSignup(true)}>
+              <span onClick={ () => {setShowSignup(true)}}>
                 <i className="fa-solid fa-user-check"></i> SignUp
               </span>
             </div>
           ) : (
-            <div className="userIconDiv" onClick={handleProfileClick}>
-              <span className="userIcon">
-                <i className="fa-solid fa-user"></i>
-              </span>
-              <span className="usernameDisplay">{loggedInUser.username}</span>
-            </div>
+            <span className="usernameDisplay">{loggedInUser.username}</span>
           )}
+
+          <div className="userIconDiv" onClick={handleProfileClick}>
+            <span className="userIcon">
+              <i className="fa-solid fa-user"></i>
+            </span>
+          </div>
         </div>
 
-        {isOpen && loggedInUser && (
+        {isOpen && (
           <div className="dropDown">
             <div className="dropDownItem">
               <i className="fa-solid fa-gear"></i> Settings

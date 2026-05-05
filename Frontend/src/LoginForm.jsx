@@ -25,7 +25,7 @@ function LoginForm({ setShowLogin, setLoggedInUser }) {
 
       setLoggedInUser(data.user);
       setShowLogin(false);
-    } catch (err) {
+    } catch {
       alert("Something went wrong. Please try again.");
     }
   };

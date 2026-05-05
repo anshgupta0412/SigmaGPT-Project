@@ -20,7 +20,7 @@ function App() {
     prevChats, setPrevChats,
     newChat, setNewChat,
     allThreads, setAllThreads,
-  }; ``
+  };
 
   return (
     <div className='app'>

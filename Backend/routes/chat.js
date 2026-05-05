@@ -92,7 +92,7 @@ router.post("/chat", async (req, res) => {
         thread.message.push({role: "user", content: message});
         };
 
-        const assistantReply = await getOpenAIAPIResponse(message);
+        const assistantReply = await getOpenAIAPIResponse(thread.message);
 
         thread.message.push({role: "assistant", content: assistantReply});
         thread.updatedAt = new Date();

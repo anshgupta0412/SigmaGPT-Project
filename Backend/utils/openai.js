@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const getOpenAIAPIResponse = async (message) => {
+const getOpenAIAPIResponse = async (messages) => {
     const options = {
     method: "POST",
     headers: {
@@ -11,12 +11,7 @@ const getOpenAIAPIResponse = async (message) => {
     },
     body: JSON.stringify({
       model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "user",
-          content: message,
-        },
-      ],
+      messages,
     }),
   };
 
