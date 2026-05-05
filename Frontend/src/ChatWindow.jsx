@@ -30,20 +30,18 @@ function ChatWindow() {
     setLoading(true);
     setNewChat(false);
 
+    const params = new URLSearchParams({
+      message: prompt,
+      threadId: currThreadId,
+    });
+
     const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      method: "GET",
       credentials: "include",
-      body: JSON.stringify({
-        message: prompt,
-        threadId: currThreadId,
-      }),
     };
 
     try {
-      const response = await fetch("http://localhost:8080/api/chat", options);
+      const response = await fetch(`http://localhost:8080/api/chat?${params}`, options);
       const res = await response.json();
       setReply(res.reply);
 
