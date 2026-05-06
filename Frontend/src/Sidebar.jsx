@@ -18,7 +18,7 @@ function Sidebar() {
 
     const getAllThreads = async () => {
         try {
-            const response = await fetch("http://localhost:8080/api/thread", { credentials: "include" });
+            const response = await fetch("https://sigmagpt-mern.onrender.com/api/thread", { credentials: "include" });
             const res = await response.json();
 
             const filteredData = res.map((thread) => ({
@@ -46,7 +46,7 @@ function Sidebar() {
 
     const deleteThread = async (threadId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/thread/${threadId}`, {
+            const response = await fetch(`https://sigmagpt-mern.onrender.com/api/thread/${threadId}`, {
                 method: "DELETE",
                 credentials: "include"
             });
@@ -72,7 +72,7 @@ function Sidebar() {
         setNewChat(false);
 
         try {
-            const response = await fetch(`http://localhost:8080/api/thread/${newThreadID}`, { credentials: "include" });
+            const response = await fetch(`https://sigmagpt-mern.onrender.com/api/thread/${newThreadID}`, { credentials: "include" });
             const res = await response.json();
 
             console.log(res);

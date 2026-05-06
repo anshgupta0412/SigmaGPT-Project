@@ -16,7 +16,7 @@ function SignupForm({ setShowSignup, setLoggedInUser }) {
     }
 
     try {
-      const res = await fetch("http://localhost:8080/signup", {
+      const res = await fetch("https://sigmagpt-mern.onrender.com/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -31,7 +31,7 @@ function SignupForm({ setShowSignup, setLoggedInUser }) {
       }
 
       // Auto-login after successful signup
-      const loginRes = await fetch("http://localhost:8080/login", {
+      const loginRes = await fetch("https://sigmagpt-mern.onrender.com/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

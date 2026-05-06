@@ -41,11 +41,11 @@ function ChatWindow() {
     };
 
     try {
-      const response = await fetch(`http://localhost:8080/api/chat?${params}`, options);
+      const response = await fetch(`https://sigmagpt-mern.onrender.com/api/chat?${params}`, options);
       const res = await response.json();
       setReply(res.reply);
 
-      const threadsRes = await fetch("http://localhost:8080/api/thread", { credentials: "include" });
+      const threadsRes = await fetch("https://sigmagpt-mern.onrender.com/api/thread", { credentials: "include" });
       const threads = await threadsRes.json();
       setAllThreads(threads.map((t) => ({ threadId: t.threadId, title: t.title })));
     } catch (err) {
@@ -80,7 +80,7 @@ function ChatWindow() {
 
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:8080/logout", {
+      await fetch("https://sigmagpt-mern.onrender.com/logout", {
         method: "POST",
         credentials: "include",
       });
