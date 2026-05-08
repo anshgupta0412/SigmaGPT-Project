@@ -9,7 +9,6 @@
     flex-direction: column;
     gap: 12px;
 }
-
 .userDiv {
     display: flex;
     justify-content: flex-end;
